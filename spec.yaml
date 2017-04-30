@@ -1,0 +1,478 @@
+
+---
+
+objects:
+- name: engine  
+  fields:
+  - name: dictionary
+    type: list
+    of: value_set
+    presence: optional
+  - name: mechanics
+    type: list
+    of: mechanic
+    presence: optional
+  - name: functions
+    type: list
+    of: function
+    presence: optional
+  - name: programs
+    type: list
+    of: program
+    presence: optional
+- name: function
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: parameter_types
+    type: list
+    of: engine_type
+    presence: required
+  - name: result_type
+    type: engine_type
+    presence: required
+  - name: tuples
+    type: list
+    of: function_tuple
+    presence: required
+- name: function_tuple
+  type: product
+  fields:
+  - name: parameters
+    type: list
+    of: any
+    presence: required
+  - name: result
+    type: any
+    presence: required
+- name: engine_type
+  type: product
+  fields:
+  - name: data_type
+    type: engine_data_type
+    presence: required
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+- name: engine_data_type
+  type: sum
+  cases:
+  - case: boolean
+    type: boolean
+  - case: dice_roll
+    type: dice_roll
+  - case: number
+    type: number
+  - case: set_number
+    type: set_number
+  - case: set_text
+    type: set_text
+  - case: text
+    type: string_utf8
+- name: dice_roll
+  type: product
+  fields:
+  - name: quantities
+    type: list
+    of: dice_quantity
+    presence: required
+  - name: modifiers
+    type: list
+    of: roll_modifier
+    presence: optional
+- name: dice_quantity
+  type: product
+  fields:
+  - name: sides
+    type: positive_integer
+    presence: required  
+  - name: quantity
+    type: positive_integer
+    presence: required  
+- name: roll_modifier
+  type: product
+  fields:
+  - name: modifier
+    type: positive_integer
+  - name: name
+    type: string_utf8
+- name: mechanic
+- name: program
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: parameter_types
+    type: list
+    of: engine_type
+    presence: required
+  - name: result_type
+    type: engine_type
+    presence: required
+  - name: statements
+    type: list
+    of: program_statement
+  - name: result_statement
+    type: program_statement
+- name: program_statement
+  type: product
+  fields:
+  - name: let
+    type: string_alphanum_underscore
+    presence: required
+  - name: function
+    type: string_alphanum_underscore
+    presence: required
+  - name: parameters
+    type: list
+    of: function_parameter
+- name: program_invocation
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: parameters
+    type: list
+    of: variable
+    presence: optional
+- name: function_parameter
+  type: product
+  fields:
+  - name: type
+    type: function_parameter_type
+  - name: value
+    type: any
+- name: function_parameter_type
+  type: enum
+  cases:
+  - parameter
+  - variable
+  - literal_number
+  - literal_string
+- name: mechanic
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: summary
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: category
+    type: mechanic_category
+    presence: optional
+  - name: requirements
+    type: list
+    of: string_alphanum_underscore
+    presence: required
+  - name: variables
+    type: list
+    of: variable
+    presence: required
+- name: mechanic_category
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: required
+  - name: description
+    type: string_utf8
+    presence: optional
+- name: variable
+  type: sum
+  cases: 
+  - case: boolean
+    type: boolean_variable 
+  - case: dice
+    type: dice_variable 
+  - case: number
+    type: number_variable 
+  - case: text
+    type: text_variable 
+- name: boolean_variable
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value
+    type: boolean_variable_value
+    presence: required
+  - name: is_namespaced
+    type: boolean
+    presence: optional
+    default: false
+  - name: tags
+    type: string_list
+    presence: optional
+- name: boolean_variable_value
+  type: sum
+  cases:
+  - case: literal
+    type: boolean
+  - case: invocation
+    type: program_invocation
+- name: dice_variable
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value
+    type: dice_roll
+    presence: required
+  - name: is_namespaced
+    type: boolean
+    presence: optional
+    default: false
+  - name: tags
+    type: string_list
+    presence: optional
+- name: number_variable
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value
+    type: number_variable_value
+    presence: required
+  - name: is_namespaced
+    type: boolean
+    presence: optional
+    default: false
+  - name: tags
+    type: string_list
+    presence: optional
+- name: number_variable_value
+  type: sum
+  cases:
+  - case: literal
+    type: boolean
+  - case: variable_reference
+    type: string_alphanum_underscore
+  - case: invocation
+    type: program_invocation
+  - case: value_reference
+    type: value_reference
+  - case: summation
+    type: summation
+- name: text_variable
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value
+    type: text_variable_value
+    presence: required
+  - name: is_namespaced
+    type: boolean
+    presence: optional
+    default: false
+  - name: tags
+    type: string_list
+    presence: optional
+- name: text_variable_value
+  type: sum
+  cases:
+  - case: literal
+    type: string_utf8
+  - case: value_reference
+    type: value_reference
+  - case: invocation
+    type: program_invocation
+- name: summation
+  type: product
+  fields:
+  - name: terms
+    type: list
+    of: summation_term
+    presence: required
+- name: summation_term
+  type: sum
+  cases:
+  - case: literal
+    type: summation_term_integer
+  - case: dice_roll
+    type: summation_term_dice_roll
+  - case: conditional
+    type: summation_term_conditional
+- name: summation_term_conditional
+  type: product
+  fields:
+  - name: conditional_term_value
+    type: boolean_variable
+    presence: required
+  - name: true_term_value
+    type: number_variable
+    presence: required
+  - name: false_term_value
+    type: number_variable
+    presence: required
+- name: summation_term_integer
+  type: product
+  fields:
+  - name: term_value
+    type: number_variable
+    presence: required
+- name: summation_term_dice_roll
+  type: product
+  fields:
+  - name: term_value
+    type: dice_variable
+    presence: required
+- name: value_reference
+  type: product
+  fields:
+  - name: value_set_name
+    type: string_alphanum_underscore
+    presence: required
+  - name: value_name
+    type: string_alphanum_underscore
+    presence: optional
+- name: value_set
+  type: sum
+  cases:
+  - name: base
+    type: value_set_base
+  - name: compound
+    type: value_set_compound
+- name: value_set_base
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: label_singular
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value_type
+    type: value_set_value_type
+    presence: optional
+  - name: values
+    type: list
+    of: value
+    presence: required
+- name: value_set_compound
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: label
+    type: string_utf8
+    presence: optional
+  - name: label_singular
+    type: string_utf8
+    presence: optional
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value_type
+    type: value_set_value_type
+    presence: optional
+  - name: value_sets
+    type: list
+    of: string_alphanum_underscore
+    presence: required
+- name: value_set_value_type
+  type: enum
+  cases:
+  - name: number
+  - name: text
+  - name: any
+- name: value
+  type: sum
+  cases:
+  - name: text
+    type: value_text
+  - name: number
+    type: value_number
+- name: value_text
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value
+    type: string_utf8
+    presence: required
+  - name: variables
+    type: list
+    of: variable
+    presence: optional
+- name: value_number
+  type: product
+  fields:
+  - name: name
+    type: string_alphanum_underscore
+    presence: required
+  - name: description
+    type: string_utf8
+    presence: optional
+  - name: value
+    type: number
+    presence: required
+  - name: variables
+    type: list
+    of: variable
+    presence: optional
