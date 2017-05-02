@@ -1,8 +1,13 @@
 
 ---
 
-objects:
+version: 1
+types:
 - name: engine  
+  label: Engine
+  description: >
+    The engine contains all of the data definitions and programmable elements in Tome.
+  type: product
   fields:
   - name: dictionary
     type: list
@@ -21,6 +26,9 @@ objects:
     of: program
     presence: optional
 - name: function
+  label: Function
+  description: >
+    The function maps one or more sets of values to another set of values. 
   type: product
   fields:
   - name: name
@@ -44,6 +52,9 @@ objects:
     of: function_tuple
     presence: required
 - name: function_tuple
+  label: Tuple
+  description: >
+    A function tuple is a mapping that belongs to a function. It defines which values are related.
   type: product
   fields:
   - name: parameters
@@ -54,6 +65,9 @@ objects:
     type: any
     presence: required
 - name: engine_type
+  label: Engine Type
+  description: >
+    A an engine type is a description of an Engine Value.
   type: product
   fields:
   - name: data_type
@@ -63,21 +77,27 @@ objects:
     type: string_alphanum_underscore
     presence: required
 - name: engine_data_type
+  label: Engine Data Type
+  description: >
+    The Engine Data Type defines the types of values available in the programming environment.
   type: sum
   cases:
-  - case: boolean
+  - name: boolean
     type: boolean
-  - case: dice_roll
+  - name: dice_roll
     type: dice_roll
-  - case: number
+  - name: number
     type: number
-  - case: set_number
+  - name: set_number
     type: set_number
-  - case: set_text
+  - name: set_text
     type: set_text
-  - case: text
+  - name: text
     type: string_utf8
 - name: dice_roll
+  label: Dice Roll
+  description: >
+    A Dice Roll represents one or more dice of differents shapes plus a modifier.
   type: product
   fields:
   - name: quantities
@@ -89,6 +109,9 @@ objects:
     of: roll_modifier
     presence: optional
 - name: dice_quantity
+  label: Dice Quantity
+  description: >
+    A Dice Quantity is a die and a number of times that the die should be rolled. 
   type: product
   fields:
   - name: sides
@@ -98,14 +121,23 @@ objects:
     type: positive_integer
     presence: required  
 - name: roll_modifier
+  label: Roll Modifier
+  description: >
+    A Roll Modifier is a bonus that is applied to a Dice Roll. The bonus may be 
+    associated with a name or description.
   type: product
   fields:
   - name: modifier
-    type: positive_integer
+    type: number
+    presence: required
   - name: name
     type: string_utf8
-- name: mechanic
+    presence: optional
 - name: program
+  label: Program
+  description: >
+    Programs define complex values that may be composed of other values. They are also reactive, 
+    so if a program depends on a set of values, it updates when any one of those values changes. 
   type: product
   fields:
   - name: name
@@ -127,9 +159,16 @@ objects:
   - name: statements
     type: list
     of: program_statement
+    presence: required
   - name: result_statement
     type: program_statement
+    presence: required
 - name: program_statement
+  label: Statement
+  description: >
+    Programs are a collection of statements. Each statement defines one value. Those values can be 
+    used in subsequent statements to calculate more values. The result of a program is just the 
+    result of the final statement.
   type: product
   fields:
   - name: let
@@ -141,7 +180,11 @@ objects:
   - name: parameters
     type: list
     of: function_parameter
+    presence: required
 - name: program_invocation
+  label: Program Invocation
+  description: >
+    A program invocation describes a program that should be run. 
   type: product
   fields:
   - name: name
@@ -152,20 +195,27 @@ objects:
     of: variable
     presence: optional
 - name: function_parameter
+  label: Function Parameter
+  description: >
+    A function parameter describes a piece of input to a function.
   type: product
   fields:
   - name: type
     type: function_parameter_type
+    presence: required
   - name: value
     type: any
-- name: function_parameter_type
-  type: enum
-  cases:
-  - parameter
-  - variable
-  - literal_number
-  - literal_string
+    presence: optional
 - name: mechanic
+  label: Mechanic
+  description: >
+    The concept of a mechanic is related to the idea of game mechanics. In Tome a mechanic is 
+    a collection of related variables. A mechanic is considered active or inactive. A mechanic's 
+    state is determined by a collection of true or false variables. When all of those variables 
+    are true, then the mechanic is active. If one of those varibles becomes false then the 
+    mechanic is changed to an inactive state. When a mechanic is active, then its variables are 
+    available in the programming environment (the engine.) And when the mechanic is inactive, 
+    those variables are inaccessible.
   type: product
   fields:
   - name: name
@@ -192,6 +242,11 @@ objects:
     of: variable
     presence: required
 - name: mechanic_category
+  label: Mechanic Category
+  description: >
+    Mechanics are grouped into categories to make them easier to organize and deal with. A mechanic 
+    may be created without a category, in which case it is sorted with other uncategorized 
+    mechanics.
   type: product
   fields:
   - name: name
@@ -204,17 +259,28 @@ objects:
     type: string_utf8
     presence: optional
 - name: variable
+  label: Variable
+  description: >
+    A variable is the basic element of programming in the Tome engine. A variable represents a 
+    piece of data that may change over time. Variables may be declared in many places. While 
+    many variables may be defined in a Tome sheet, they may not all be active. Only active 
+    variables may be used by programs, widgets, or other Tome elements. There are a number of 
+    different situations where variables may be activated.
   type: sum
   cases: 
-  - case: boolean
+  - name: boolean
     type: boolean_variable 
-  - case: dice
+  - name: dice
     type: dice_variable 
-  - case: number
+  - name: number
     type: number_variable 
-  - case: text
+  - name: text
     type: text_variable 
 - name: boolean_variable
+  label: Boolean Variable
+  description: >
+    A boolean variable represents a piece of data that is either True of False. More generally, 
+    it can represent any data with two unique states.
   type: product
   fields:
   - name: name
@@ -237,13 +303,19 @@ objects:
     type: string_list
     presence: optional
 - name: boolean_variable_value
+  label: Boolean Variable Value
+  description: >
+    The boolean variable value is the source of a Boolean Variable's value.
   type: sum
   cases:
-  - case: literal
+  - name: literal
     type: boolean
-  - case: invocation
+  - name: invocation
     type: program_invocation
 - name: dice_variable
+  label: Dice Variable
+  description: >
+    A Dice Variable represents a Dice Roll value.
   type: product
   fields:
   - name: name
@@ -266,6 +338,9 @@ objects:
     type: string_list
     presence: optional
 - name: number_variable
+  label: Number Variable
+  description: >
+    A Number Variable holds numerical data. 
   type: product
   fields:
   - name: name
@@ -288,19 +363,25 @@ objects:
     type: string_list
     presence: optional
 - name: number_variable_value
+  label: Number Variable Value
+  description: >
+    A number variable value is the source of a Number Variable's value.
   type: sum
   cases:
-  - case: literal
+  - name: literal
     type: boolean
-  - case: variable_reference
+  - name: variable_reference
     type: string_alphanum_underscore
-  - case: invocation
+  - name: invocation
     type: program_invocation
-  - case: value_reference
+  - name: value_reference
     type: value_reference
-  - case: summation
+  - name: summation
     type: summation
 - name: text_variable
+  label: Text Variable
+  description: >
+    A text variable contains textual data.
   type: product
   fields:
   - name: name
@@ -323,15 +404,21 @@ objects:
     type: string_list
     presence: optional
 - name: text_variable_value
+  label: Text Variable Value
+  description: >
+    The source of a Text Variable's data.
   type: sum
   cases:
-  - case: literal
+  - name: literal
     type: string_utf8
-  - case: value_reference
+  - name: value_reference
     type: value_reference
-  - case: invocation
+  - name: invocation
     type: program_invocation
 - name: summation
+  label: Summation
+  description: >
+    A summation is a numerical value that consists of the sum of other numerical values.
   type: product
   fields:
   - name: terms
@@ -339,15 +426,22 @@ objects:
     of: summation_term
     presence: required
 - name: summation_term
+  label: Summation Term
+  description: >
+    A summation term is a value that is part of a summation.
   type: sum
   cases:
-  - case: literal
+  - name: literal
     type: summation_term_integer
-  - case: dice_roll
+  - name: dice_roll
     type: summation_term_dice_roll
-  - case: conditional
+  - name: conditional
     type: summation_term_conditional
 - name: summation_term_conditional
+  label: Conditional Term
+  description: >
+    A conditional summation term is a term that can take on two different values, depending on the 
+    truthfulness of a boolean variable. 
   type: product
   fields:
   - name: conditional_term_value
@@ -360,18 +454,30 @@ objects:
     type: number_variable
     presence: required
 - name: summation_term_integer
+  label: Integer Term
+  description: >
+    An integer term is a number that is part of a summation.
   type: product
   fields:
   - name: term_value
     type: number_variable
     presence: required
 - name: summation_term_dice_roll
+  label: Dice Roll Term
+  description: >
+    An dice roll term represents a number that is part of a summation. Depending on how the 
+    summation is used, the dice roll may be rolled to calculate an exact value for the 
+    summation or the dice roll may be preserved, in which case the summation becomes a dice 
+    roll with any non-dice roll values being modifiers to the roll.
   type: product
   fields:
   - name: term_value
     type: dice_variable
     presence: required
 - name: value_reference
+  label: Value Reference
+  description: >
+    A value reference is a reference to a value or value set defined in the Dictionary.
   type: product
   fields:
   - name: value_set_name
@@ -381,6 +487,10 @@ objects:
     type: string_alphanum_underscore
     presence: optional
 - name: value_set
+  label: Value Set
+  description: >
+    A value set is a set of custom values. It may simply be a collection of values or it could 
+    be a collection of value sets.
   type: sum
   cases:
   - name: base
@@ -388,6 +498,9 @@ objects:
   - name: compound
     type: value_set_compound
 - name: value_set_base
+  label: Base Value Set
+  description: >
+    A base value set is a collection of custom defined values in Tome. 
   type: product
   fields:
   - name: name
@@ -410,6 +523,9 @@ objects:
     of: value
     presence: required
 - name: value_set_compound
+  label: Compound Value Set
+  description: >
+    A compound value set is a collection of other value sets.
   type: product
   fields:
   - name: name
@@ -431,13 +547,11 @@ objects:
     type: list
     of: string_alphanum_underscore
     presence: required
-- name: value_set_value_type
-  type: enum
-  cases:
-  - name: number
-  - name: text
-  - name: any
 - name: value
+  label: Value
+  description: >
+    A value is a fundamental part of the programming engine. It permits the creation of custom 
+    data.
   type: sum
   cases:
   - name: text
@@ -445,6 +559,9 @@ objects:
   - name: number
     type: value_number
 - name: value_text
+  label: Text Value
+  description: >
+    A textual value.
   type: product
   fields:
   - name: name
@@ -461,6 +578,9 @@ objects:
     of: variable
     presence: optional
 - name: value_number
+  label: Number Value
+  description: >
+    A numerical value.
   type: product
   fields:
   - name: name
@@ -476,3 +596,18 @@ objects:
     type: list
     of: variable
     presence: optional
+constraints:
+- name: function_parameter_type
+  type: string_one_of
+  set:
+  - parameter
+  - variable
+  - literal_number
+  - literal_string
+- name: value_set_value_type
+  type: string_one_of
+  set:
+  - number
+  - text
+  - any
+
