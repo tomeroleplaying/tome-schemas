@@ -13,18 +13,28 @@ types:
     type: list
     of: value_set
     presence: optional
+    description: >
+      The engine's Dictionary defines all of the values and sets of values used in the sheet.
   - name: mechanics
     type: list
     of: mechanic
     presence: optional
+    description: >
+      The mechanics define groupings of variables that may be active or inactive, depending on 
+      customizable conditions. This allows the creation of different game mechanics, and permits 
+      those mechanics to be made available only in certain situations.
   - name: functions
     type: list
     of: function
     presence: optional
+    description: >
+      Functions associate different sets of values. 
   - name: programs
     type: list
     of: program
     presence: optional
+    description: >
+      Programs allow values on the sheet to be created from complex calculations.
 - name: function
   label: Function
   description: >
@@ -34,23 +44,41 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The function name. Must be unique and contain only letters, numbers and underscores. The 
+      function name is used to uniquely identify the function when programming or customizing 
+      a sheet. A typical user will not see this value.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The function's label is the name or identifier of the function, intended for human 
+      consumption. Make it pretty! It does not need to be unique and may contain any letters 
+      or characters.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A description of the function. The description should be concise and describe the purpose 
+      of the function. It will probably be helpful to include as well situations where the 
+      function will likely be used.
   - name: parameter_types
     type: list
     of: engine_type
     presence: required
+    description: >
+      The types of the input that the function accepts. 
   - name: result_type
     type: engine_type
     presence: required
+    description: >
+      The type of data returned by the function.
   - name: tuples
     type: list
     of: function_tuple
     presence: required
+    description: >
+      All of the mappings defined by the function.
 - name: function_tuple
   label: Tuple
   description: >
@@ -61,9 +89,13 @@ types:
     type: list
     of: any
     presence: required
+    description: >
+      The input values of the tuple.
   - name: result
     type: any
     presence: required
+    description: >
+      The tuple output value.
 - name: engine_type
   label: Engine Type
   description: >
@@ -73,9 +105,13 @@ types:
   - name: data_type
     type: engine_data_type
     presence: required
+    description: >
+      The type of data.
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      A name of the data.
 - name: engine_data_type
   label: Engine Data Type
   description: >
@@ -84,16 +120,28 @@ types:
   cases:
   - name: boolean
     type: boolean
+    description: >
+      A true/false value.
   - name: dice_roll
     type: dice_roll
+    description: >
+      A dice roll value.
   - name: number
     type: number
+    description: >
+      A numerical value.
   - name: set_number
     type: set_number
+    description: >
+      A set of numbers.
   - name: set_text
     type: set_text
+    description: >
+      A set of strings.
   - name: text
     type: string_utf8
+    description: >
+      A UTF-8 string.
 - name: dice_roll
   label: Dice Roll
   description: >
@@ -104,10 +152,14 @@ types:
     type: list
     of: dice_quantity
     presence: required
+    description: >
+      The dice quantities.
   - name: modifiers
     type: list
     of: roll_modifier
     presence: optional
+    description: >
+      The dice modifiers.
 - name: dice_quantity
   label: Dice Quantity
   description: >
@@ -117,9 +169,13 @@ types:
   - name: sides
     type: positive_integer
     presence: required  
+    description: >
+      The number of sides of the die.
   - name: quantity
     type: positive_integer
     presence: required  
+    description: >
+      The number of times to roll the die.
 - name: roll_modifier
   label: Roll Modifier
   description: >
@@ -130,9 +186,13 @@ types:
   - name: modifier
     type: number
     presence: required
+    description: >
+      The integer value to add to a dice roll as a modifier.
   - name: name
     type: string_utf8
     presence: optional
+    description: >
+      A label for the modifier.
 - name: program
   label: Program
   description: >
@@ -143,26 +203,44 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      A name of the program. Must be unique and contain only letters, numbers, and underscores. 
+      The name is used to uniquely identify the program when customizing some aspect of the 
+      sheet.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      A program label is the program's name but formatted so it is easy to read. It does not need 
+      to be unique and contain contain any letters or characters.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A concise description of what the program does, why it exists, and in what situations it 
+      could be used.
   - name: parameter_types
     type: list
     of: engine_type
     presence: required
+    description: >
+      The types of input values that the program accepts.
   - name: result_type
     type: engine_type
     presence: required
+    description: >
+      The types of data the program outputs.
   - name: statements
     type: list
     of: program_statement
     presence: required
+    description: >
+      The program's statements.
   - name: result_statement
     type: program_statement
     presence: required
+    description: >
+      The program statement that calculates the program result value.
 - name: program_statement
   label: Statement
   description: >
@@ -174,13 +252,19 @@ types:
   - name: let
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the variable defined by the statement. 
   - name: function
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The function called by the statement.
   - name: parameters
     type: list
     of: function_parameter
     presence: required
+    description: >
+      The the parameters of the function that the statement calls.
 - name: program_invocation
   label: Program Invocation
   description: >
@@ -190,10 +274,14 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The unique name of the program to be invoked.
   - name: parameters
     type: list
     of: variable
     presence: optional
+    description: >
+      The parameters to give to the program.
 - name: function_parameter
   label: Function Parameter
   description: >
@@ -203,9 +291,13 @@ types:
   - name: type
     type: function_parameter_type
     presence: required
+    description: >
+      The type of the data to pass to the function.
   - name: value
     type: any
     presence: optional
+    description: >
+      The value of the parameter.
 - name: mechanic
   label: Mechanic
   description: >
@@ -221,26 +313,46 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the Mechanic. The name is used to uniquely identify the mechanic when 
+      programming or customizing the sheet. Therefore, the name must be unique and contain 
+      only letters, numbers, and underscores.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The mechanic label is the name of the Mechanic formatted nicely. It does not need to be 
+      unique or contain any specific characters, but should be pleasant to read!
   - name: summary
     type: string_utf8
     presence: optional
+    description: >
+      The mechanic summary is a very brief description of the mechanic. The summary is displayed 
+      alongside the mechanic label in lists.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      The description should explain what the mechanic does and how, as well as detail situations 
+      when it should be used. The description should relate the mechanic to the game rules that it 
+      was created to emulate.
   - name: category
     type: mechanic_category
     presence: optional
+    description: >
+      The category of the mechanic should group the mechanic with other related mechanics.
   - name: requirements
     type: list
     of: string_alphanum_underscore
     presence: required
+    description: >
+      A list of boolean variables that must be true for the mechanic to be active.
   - name: variables
     type: list
     of: variable
     presence: required
+    description: >
+      The variables that are active when the mechanic is active.
 - name: mechanic_category
   label: Mechanic Category
   description: >
@@ -252,12 +364,21 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the mechanic category is used to uniquely identify the category when customizing 
+      the sheet. It must be unique and contain only letters, numbers, and underscores. What happens 
+      when not unique?
   - name: label
+    description: >
+      The mechanic name in a form that is pleasant to read. It does not need to be unique and may 
+      contain any characters. What about the length?
     type: string_utf8
     presence: required
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A description of the category and the common traits that its mechanics share.
 - name: variable
   label: Variable
   description: >
@@ -270,12 +391,20 @@ types:
   cases: 
   - name: boolean
     type: boolean_variable 
+    description: >
+      A variable with a true/false value.
   - name: dice
     type: dice_variable 
+    description: >
+      A variable with a dice roll value.
   - name: number
     type: number_variable 
+    description: >
+      A variable with a numerical value.
   - name: text
     type: text_variable 
+    description: >
+      A variable with a text value.
 - name: boolean_variable
   label: Boolean Variable
   description: >
@@ -286,22 +415,37 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the Boolean Variable. The name must be unique and may only contain letters, 
+      numbers, and underscores. It is used to uniquely identify the variable when customizing 
+      the sheet or programming.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The Boolean Variable's name in a format that is pleasant to read. The label does not need 
+      to be unique and may contain any characters.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A description of what the variable represents.
   - name: value
     type: boolean_variable_value
     presence: required
+    description: >
+      The value of the variable.
   - name: is_namespaced
     type: boolean
     presence: optional
     default: false
+    description: >
+      If true this variable may be assigned a namespace depending on its context.
   - name: tags
     type: string_list
     presence: optional
+    description: >
+      Tags that can be used to place the variable in a group.
 - name: boolean_variable_value
   label: Boolean Variable Value
   description: >
@@ -310,8 +454,12 @@ types:
   cases:
   - name: literal
     type: boolean
+    description: >
+      A literal true/false value.
   - name: invocation
     type: program_invocation
+    description: >
+      A true/false value created from a program.
 - name: dice_variable
   label: Dice Variable
   description: >
@@ -321,22 +469,37 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the Dice Variable. The name must be unique and may only contain letters, 
+      numbers, and underscores. It is used to uniquely identify the variable when customizing 
+      the sheet or programming.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The Dice Variable's name in a format that is pleasant to read. The label does not need 
+      to be unique and may contain any characters.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A description of what the variable represents.
   - name: value
     type: dice_roll
     presence: required
+    description: >
+      A the dice roll value.
   - name: is_namespaced
     type: boolean
     presence: optional
     default: false
+    description: >
+      If true this variable may be assigned a namespace depending on its context.
   - name: tags
     type: string_list
     presence: optional
+    description: >
+      Tags that can be used to place the variable in a group.
 - name: number_variable
   label: Number Variable
   description: >
@@ -359,9 +522,13 @@ types:
     type: boolean
     presence: optional
     default: false
+    description: >
+      If true this variable may be assigned a namespace depending on its context.
   - name: tags
     type: string_list
     presence: optional
+    description: >
+      Tags that can be used to place the variable in a group.
 - name: number_variable_value
   label: Number Variable Value
   description: >
@@ -370,14 +537,24 @@ types:
   cases:
   - name: literal
     type: boolean
+    description: >
+      A literal number.
   - name: variable_reference
     type: string_alphanum_underscore
+    description: >
+      The value of another number variable.
   - name: invocation
     type: program_invocation
+    description: >
+      The value of another number variable.
   - name: value_reference
     type: value_reference
+    description: >
+      A value from the Dictionary.
   - name: summation
     type: summation
+    description: >
+      The value of a summation.
 - name: text_variable
   label: Text Variable
   description: >
@@ -387,22 +564,37 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the Text Variable. The name must be unique and may only contain letters, 
+      numbers, and underscores. It is used to uniquely identify the variable when customizing 
+      the sheet or programming.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The Text Variable's name in a format that is pleasant to read. The label does not need 
+      to be unique and may contain any characters.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A description of what the variable represents.
   - name: value
     type: text_variable_value
     presence: required
+    description: >
+      The text value.
   - name: is_namespaced
     type: boolean
     presence: optional
     default: false
+    description: >
+      If true this variable may be assigned a namespace depending on its context.
   - name: tags
     type: string_list
     presence: optional
+    description: >
+      Tags that can be used to place the variable in a group.
 - name: text_variable_value
   label: Text Variable Value
   description: >
@@ -411,10 +603,16 @@ types:
   cases:
   - name: literal
     type: string_utf8
+    description: >
+      A literal text value.
   - name: value_reference
     type: value_reference
+    description: >
+      A text value from the Dictionary.
   - name: invocation
     type: program_invocation
+    description: >
+      A program that returns a text value.
 - name: summation
   label: Summation
   description: >
@@ -425,6 +623,8 @@ types:
     type: list
     of: summation_term
     presence: required
+    description: >
+      The terms of the summation.
 - name: summation_term
   label: Summation Term
   description: >
@@ -433,10 +633,16 @@ types:
   cases:
   - name: literal
     type: summation_term_integer
+    description: >
+      A literal number.
   - name: dice_roll
     type: summation_term_dice_roll
+    description: >
+      A dice roll.
   - name: conditional
     type: summation_term_conditional
+    description: >
+      The value depends on if a boolean variable is true or false.
 - name: summation_term_conditional
   label: Conditional Term
   description: >
@@ -447,12 +653,18 @@ types:
   - name: conditional_term_value
     type: boolean_variable
     presence: required
+    description: >
+      A boolean variable that is used to determine which branch to follow.
   - name: true_term_value
     type: number_variable
     presence: required
+    description: >
+      The number variable to be the result when the conditional term is true.
   - name: false_term_value
     type: number_variable
     presence: required
+    description: >
+      The number variable to be the result when the conditional term is false.
 - name: summation_term_integer
   label: Integer Term
   description: >
@@ -462,6 +674,8 @@ types:
   - name: term_value
     type: number_variable
     presence: required
+    description: >
+      The number variable that is the term value.
 - name: summation_term_dice_roll
   label: Dice Roll Term
   description: >
@@ -474,6 +688,8 @@ types:
   - name: term_value
     type: dice_variable
     presence: required
+    description: >
+      The dice roll value that is the term value.
 - name: value_reference
   label: Value Reference
   description: >
@@ -483,9 +699,13 @@ types:
   - name: value_set_name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name of the value set.
   - name: value_name
     type: string_alphanum_underscore
     presence: optional
+    description: >
+      The name of the value.
 - name: value_set
   label: Value Set
   description: >
@@ -495,8 +715,12 @@ types:
   cases:
   - name: base
     type: value_set_base
+    description: >
+      A base value set, composed of just values.
   - name: compound
     type: value_set_compound
+    description: >
+      A compound value set, composed of values from multiple value sets.
 - name: value_set_base
   label: Base Value Set
   description: >
@@ -506,22 +730,36 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name is used to uniquely identify the Base Value Set when customizing or programming. 
+      It must therefore be unique and may contain only letters, numbers, and underscores.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The name in a format that is pleasant to read. Does not need to be unique and may contain 
+      any characters. Should be plural.
   - name: label_singular
     type: string_utf8
     presence: optional
+    description: >
+      The name in a format that is pleasant to read, but in a singular form.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A concise description of the value set's purpose and of what it contains.
   - name: value_type
     type: value_set_value_type
     presence: optional
+    description: >
+      The type of values in the value set.
   - name: values
     type: list
     of: value
     presence: required
+    description: >
+      The colletion of values in the set.
 - name: value_set_compound
   label: Compound Value Set
   description: >
@@ -531,22 +769,36 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      The name is used to uniquely identify the Base Value Set when customizing or programming. 
+      It must therefore be unique and may contain only letters, numbers, and underscores.
   - name: label
     type: string_utf8
     presence: optional
+    description: >
+      The name in a format that is pleasant to read. Does not need to be unique and may contain 
+      any characters. Should be plural.
   - name: label_singular
     type: string_utf8
     presence: optional
+    description: >
+      The name in a format that is pleasant to read, but in a singular form.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A concise description of the value set's purpose and of what it contains.
   - name: value_type
     type: value_set_value_type
     presence: optional
+    description: >
+      The type of values in the value set.
   - name: value_sets
     type: list
     of: string_alphanum_underscore
     presence: required
+    description: >
+      The names of the value sets in the compound value set.
 - name: value
   label: Value
   description: >
@@ -556,8 +808,12 @@ types:
   cases:
   - name: text
     type: value_text
+    description: >
+      A text value.
   - name: number
     type: value_number
+    description: >
+      A numerical value.
 - name: value_text
   label: Text Value
   description: >
@@ -567,16 +823,24 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      A unique identifier of the value.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A concise description of what the value represents.
   - name: value
     type: string_utf8
     presence: required
+    description: >
+      The text value.
   - name: variables
     type: list
     of: variable
     presence: optional
+    description: >
+      Variables that will be active when this value is used.
 - name: value_number
   label: Number Value
   description: >
@@ -586,16 +850,24 @@ types:
   - name: name
     type: string_alphanum_underscore
     presence: required
+    description: >
+      A unique identifier of the value.
   - name: description
     type: string_utf8
     presence: optional
+    description: >
+      A concise description of what the value represents.
   - name: value
     type: number
     presence: required
+    description: >
+      The number value.
   - name: variables
     type: list
     of: variable
     presence: optional
+    description: >
+      Variables that will be active when this value is used.
 constraints:
 - name: function_parameter_type
   type: string_one_of
