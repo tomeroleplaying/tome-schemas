@@ -3101,3 +3101,4 @@ constraints:
     description: Points Above Bar Style
     set:
     - opposite_left_label
+constraints:
