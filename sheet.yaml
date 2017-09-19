@@ -65,7 +65,9 @@ types:
     description: >
       The unique sheet identifier.
     group: Sheet
-    base_type: string
+    base_type: 
+      type: prim_type
+      prim_type: string
 - type: product_type
   product_type:
     name: settings
@@ -103,7 +105,9 @@ types:
     description: >
       The unique theme identifier.
     group: Theme
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
 - type: primitive_type
   primitive_type:
     name: custom_theme_name
@@ -111,7 +115,9 @@ types:
     description: >
       The name of a custom theme.
     group: Theme
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
 - type: product_type
   product_type:
     name: section
@@ -147,7 +153,9 @@ types:
     description: >
       The name of a section.
     group: Section
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
 - type: product_type
   product_type:
     name: page
@@ -386,7 +394,9 @@ types:
     description: >
       The unique identifier of a widget.
     group: Widget
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
 - type: product_type
   product_type:
     name: widget_action
@@ -1293,7 +1303,9 @@ types:
     label: Points Bar Style
     description: Points Bar Style
     group: 'Widget: Points'
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - points_bar_style_set
 - type: primitive_type
@@ -1302,7 +1314,9 @@ types:
     label: Points Above Bar Style
     description: Points Above Bar Style
     group: 'Widget: Points'
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - points_above_bar_style_set
 - type: product_type
@@ -1693,7 +1707,9 @@ types:
     label: Table Sort Order
     description: Table Sort ORder
     group: 'Widget: Table'
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - table_sort_order_set
 - type: product_type
@@ -1769,7 +1785,9 @@ types:
     label: column_variable_prefix
     description: Prefix of all generated variables in this column.
     group: 'Widget: Table'
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
 - type: product_type
   product_type:
     name: table_widget_boolean_column
@@ -2852,7 +2870,9 @@ types:
     label: Icon
     description: An icon.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - icon_set
 - type: product_type
@@ -2898,7 +2918,9 @@ types:
     description: >
       Numeric Editor Type
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - numeric_editor_type_set
 - type: primitive_type
@@ -2908,7 +2930,9 @@ types:
     description: >
       The alignment options.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - alignment_set
 - type: primitive_type
@@ -2918,7 +2942,9 @@ types:
     description: >
       The vertical alignment options.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - vertical_alignment_set
 - type: primitive_type
@@ -2928,7 +2954,9 @@ types:
     description: >
       Font.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
 - type: primitive_type
   primitive_type:
     name: text_font_style
@@ -2936,7 +2964,9 @@ types:
     description: >
       Font.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - font_style_set
 - type: primitive_type
@@ -2946,7 +2976,9 @@ types:
     description: >
       The widget height options.
     group: Style
-    base_type: number
+    base_type:
+      type: prim_type
+      prim_type: number
 - type: primitive_type
   primitive_type:
     name: position
@@ -2954,7 +2986,9 @@ types:
     description: >
       The widget position options.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - position_set
 - type: primitive_type
@@ -2964,7 +2998,9 @@ types:
     description: >
       The button icon options.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - button_icon_name_set
 - type: primitive_type
@@ -2974,7 +3010,9 @@ types:
     description: >
       Text size.
     group: Style
-    base_type: number
+    base_type: 
+      type: prim_type
+      prim_type: number
 - type: primitive_type
   primitive_type:
     name: button_view_type
@@ -2982,7 +3020,9 @@ types:
     description: >
       The type of button view.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - button_view_type_set
 - type: primitive_type
@@ -2992,7 +3032,9 @@ types:
     description: >
       The type of option widget view.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - option_widget_view_type_set
 - type: primitive_type
@@ -3002,7 +3044,9 @@ types:
     description: >
       The type of quote widget view.
     group: Style
-    base_type: string
+    base_type:
+      type: prim_type
+      prim_type: string
     constraints:
     - quote_widget_view_type_set
 constraints:
